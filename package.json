@@ -1,0 +1,15 @@
+{
+  "name": "project-to-do-list",
+  "version": "1.0.0",
+  "description": "A To-Do List project to practice HTML/CSS/JS/OOP.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack-cli": "^5.1.4"
+  }
+}
