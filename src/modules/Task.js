@@ -12,7 +12,7 @@ export default class Task {
         this.name = name;
         this.dueDate  = dueDate;
         this.description = 'No description';
-        this.priority = 1;
+        this.priority = 'Low';
         this.isBig = false;
     }
 
@@ -44,12 +44,18 @@ export default class Task {
         const taskDescription = document.createElement('p');
         taskDescription.textContent = this.description;
 
-        const taskPriority = document.createElement('p');
+        const taskPriorityDiv = document.createElement('div');
+        taskPriorityDiv.classList.add('dropdown');
+
+        const taskPriority = document.createElement('button');
         taskPriority.textContent = this.priority;
+        taskPriority.classList.add('dropbtn');
 
         const hamburger = new Image();
         hamburger.src = Hamburger;
         hamburger.id = 'hamburger-icon';
+
+        taskPriorityDiv.appendChild(taskPriority);
 
         taskMainContent.appendChild(taskCheckbox);
         taskMainContent.appendChild(taskName);
@@ -57,7 +63,7 @@ export default class Task {
         taskMainContent.appendChild(myIcon);
 
         taskSecondaryContent.appendChild(taskDescription);
-        taskSecondaryContent.appendChild(taskPriority);
+        taskSecondaryContent.appendChild(taskPriorityDiv);
 
         taskItem.appendChild(taskMainContent);
         taskItem.appendChild(hamburger);
@@ -108,6 +114,38 @@ export default class Task {
             });
             
         });
+
+        taskDueDate.addEventListener('click', 
+        (e) => {
+            
+            const changeDueDateMenu = document.createElement('div');
+            changeDueDateMenu.id = 'change-due-date-menu';
+            const taskMenuDate = document.createElement('input');
+            taskMenuDate.type = 'date';
+            taskMenuDate.value = this.dueDate;
+            const changeDueDateButton = document.createElement('button');
+            changeDueDateButton.id = 'change-due-date-button';
+            changeDueDateButton.textContent = 'Submit';
+            changeDueDateMenu.appendChild(taskMenuDate);
+            changeDueDateMenu.appendChild(changeDueDateButton);
+            
+            if (!inEditMode) {
+                taskDueDate.hidden = true;
+                taskMainContent.insertBefore(changeDueDateMenu, myIcon);
+                inEditMode = true;
+            }
+
+            changeDueDateButton.addEventListener('click', 
+            (e) => {
+                
+                Storage.changeTaskDueDate(this, taskMenuDate.value);
+                taskDueDate.value = taskMenuDate.value;
+                taskMainContent.removeChild(changeDueDateMenu);
+                taskDueDate.hidden = false;
+                inEditMode = false;
+                
+            });
+        });
         
         // Edit description of the task
         taskDescription.addEventListener('click', 
@@ -132,14 +170,38 @@ export default class Task {
         });
         // Edit the priority of the task
 
+        taskPriority.addEventListener('click',
+        (e) => {
+            const taskPriorityDropContent =  document.createElement('div');
+            taskPriorityDropContent.classList.add('dropdown-content');
+            taskPriorityDropContent.innerHTML = "<a id=\"priority-high\">High</a><a id=\"priority-medium\" >Medium</a><a id=\"priority-low\" >Low</a>";
 
-        function selectElementContents(el) {
-            var range = document.createRange();
-            range.selectNodeContents(el);
-            var sel = window.getSelection();
-            sel.removeAllRanges();
-            sel.addRange(range);
-        }
+            if(!inEditMode) {
+                taskPriorityDiv.appendChild(taskPriorityDropContent);
+                taskPriorityDropContent.style.display = 'block';
+                const priorityHigh = document.getElementById('priority-high');
+                const priorityMedium = document.getElementById('priority-medium');
+                const priorityLow = document.getElementById('priority-low');
+                priorityHigh.addEventListener('click',
+                () => {
+                    taskPriorityDropContent.style.display = 'none';
+                    taskPriorityDiv.removeChild(taskPriorityDropContent);
+                    Storage.changeTaskPriority(this, 'High');
+                });
+                priorityMedium.addEventListener('click',
+                () => {
+                    taskPriorityDropContent.style.display = 'none';
+                    taskPriorityDiv.removeChild(taskPriorityDropContent);
+                    Storage.changeTaskPriority(this, 'Medium');
+                });
+                priorityLow.addEventListener('click',
+                () => {
+                    taskPriorityDropContent.style.display = 'none';
+                    taskPriorityDiv.removeChild(taskPriorityDropContent);
+                    Storage.changeTaskPriority(this, 'Low');
+                });
+            }
+        });
     }
 
 }

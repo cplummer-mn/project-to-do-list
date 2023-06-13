@@ -84,4 +84,29 @@ export default class Storage {
         }
         Storage.updateData(data);
     }
+
+    static changeTaskDueDate(taskToChange, newDueDate) {
+        const data = Storage.getData();
+        for(const project of data.projects) {
+            for(const task of project.tasks) {
+                if(task.name == taskToChange.name) {
+                    task.dueDate = newDueDate;
+                }
+            }
+        }
+        Storage.updateData(data);
+    }
+
+    static changeTaskPriority(taskToChange, newPriority) {
+        const data = Storage.getData();
+        for(const project of data.projects) {
+            for(const task of project.tasks) {
+                if(task.name == taskToChange.name) {
+                    task.priority = newPriority;
+                }
+            }
+        }
+        Storage.updateData(data);
+        UI.loadSelected();
+    }
 }

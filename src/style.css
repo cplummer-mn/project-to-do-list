@@ -60,6 +60,37 @@
     box-shadow: 15px 10px 5px #14161a;
     text-shadow: 3px 2px 5px #14161a;
    }
+
+   #change-due-date-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+   }
+
+   .dropdown {
+    display: inline-block;
+   }
+
+   .dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: var(--secondary);
+   }
+
+   .dropdown-content a {
+    display: block;
+    color: #eeeeee;
+    cursor: pointer;
+    padding: 5px 5px;
+   }
+
+   .dropbtn {
+    border: none;
+    color: #eeeeee;
+   }
   
    .task-main-content {
     display: flex;
