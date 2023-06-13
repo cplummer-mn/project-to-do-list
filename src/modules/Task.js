@@ -1,5 +1,6 @@
 import Icon from '../assets/images/x.png'
 import Hamburger from '../assets/images/hamburger.png';
+import Storage from './Storage';
 
 const main = document.getElementById('main-content');
 
@@ -70,23 +71,18 @@ export default class Task {
             console.log('remove task was clicked');
             main.removeChild(taskItem);
             
-            const index = project.tasks.indexOf(task);
-            project.tasks.splice(index, 1);
-
-            console.log(project);
+            Storage.removeTask(this);
         });
 
         // Expand or Contract Task by clicking on the hamburger
         hamburger.addEventListener('click', 
         (e) => {
-            if(task.isBig) {
-                task.isBig = false;
-                taskItem.classList.remove('big-task-item');
+            if(this.isBig) {
+                this.isBig = false;
                 taskItem.removeChild(taskSecondaryContent);
             }
             else {
-                task.isBig = true;
-                taskItem.classList.add('big-task-item');
+                this.isBig = true;
                 taskItem.insertBefore(taskSecondaryContent, hamburger);
             }
         }); 
@@ -105,7 +101,7 @@ export default class Task {
             taskName.addEventListener('keypress', 
             (e) => {
                 if (e.key  === 'Enter') {
-                    task.name = taskName.textContent;
+                    Storage.changeTaskName(this, taskName.textContent);
                     taskName.contentEditable = false;
                     inEditMode = false;
                 }
@@ -127,7 +123,7 @@ export default class Task {
             taskDescription.addEventListener('keypress', 
             (e) => {
                 if (e.key  === 'Enter') {
-                    task.description = taskDescription.textContent;
+                    Storage.changeTaskDescription(this, taskDescription.textContent);
                     taskDescription.contentEditable = false;
                     inEditMode = false;
                 }

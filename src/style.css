@@ -9,7 +9,7 @@
     --primary: #00ADB5;
     --third: #222831;
     --secondary: #393E46;
-    --text-color: #393E46;
+    --text-color: #222427;
     --text-color-two: #EEEEEE;
   }
   
@@ -24,7 +24,7 @@
   
    main {
      display: flex;
-     min-height: calc(100vh - 15vh);
+     min-height: calc(100vh - 12.5vh);
      color: var(--text-color-two);
    }
   
@@ -37,12 +37,11 @@
     background-color: var(--third);
    }
   
-   #add-task-button {
-    height: 2vh;
-   }
-  
    button {
-    background-color: var(--text-color-two);
+    background-color: var(--primary);
+    border-radius: 10px;
+    border: 2px solid var(--text-color-two);
+    padding: 6px;
    }
   
    #task-menu {
@@ -55,8 +54,11 @@
     flex-direction: column;
     background-color: var(--primary);
     border-radius: 5px;
+    border: 1px solid #000000;
     padding: 0px 8px 0px 8px;
     width: 30vw;
+    box-shadow: 15px 10px 5px #14161a;
+    text-shadow: 3px 2px 5px #14161a;
    }
   
    .task-main-content {
@@ -75,12 +77,8 @@
     margin-bottom: 5px;
    }
   
-   .big-task-item {
-    height: 13%;
-   }
-  
    #x-icon {
-    width: 25px;
+    width: 15px;
     cursor: pointer;
    }
   
@@ -113,6 +111,15 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
+    text-shadow: 7px 4px 5px #14161a;
+   }
+
+   #add-project-button {
+    margin-top: 15px;
+   }
+
+   .projects:hover {
+    font-size: 110%;
    }
   
    .projects img {
@@ -129,7 +136,7 @@
    }
   
    header {
-     height: 10vh;
+     height: 7.5vh;
      display: flex;
      align-items: center;
      padding-left: 5em;
@@ -156,4 +163,14 @@
    header, footer {
     background-color: var(--primary);
     color: var(--text-color);
+   }
+
+   img {
+    -webkit-filter: drop-shadow(1px 1px 2px #14161a);
+    filter: drop-shadow(1px 1px 2px #14161a);
+   }
+
+   #header-logo, #koala-logo {
+    -webkit-filter: drop-shadow(1px 1px 2px #eeeeee);
+    filter: drop-shadow(1px 1px 2px #eeeeee);
    }

@@ -1,6 +1,7 @@
 import Data from "./Data";
 import Project from "./Project";
 import Task from "./Task";
+import UI from "./UI";
 
 
 export default class Storage {
@@ -25,5 +26,62 @@ export default class Storage {
 
     static updateData(data) {
         localStorage.setItem('data', JSON.stringify(data));
+    }
+
+    static addProject(project) {
+        const data = Storage.getData();
+        data.projects.push(project);
+        Storage.updateData(data);
+    }
+
+    static selectProject(project) {
+        const data = Storage.getData();
+        for(const element of data.projects) {
+            element.deselect();
+        }
+        for(const element of data.projects) {
+            if(element.name == project.name) {
+                element.select();
+            }
+        }
+        Storage.updateData(data);
+    }
+
+    static removeTask(taskToRemove) {
+        const data = Storage.getData();
+        for(const project of data.projects) {
+            for(const task of project.tasks) {
+                if(task.name == taskToRemove.name) {
+                    project.tasks.splice(project.tasks.indexOf(task), 1);
+                }
+            }
+        }
+        Storage.updateData(data);
+        UI.loadSelected();
+    }
+
+    static changeTaskName(taskToChange, newName) {
+        const data = Storage.getData();
+        for(const project of data.projects) {
+            for(const task of project.tasks) {
+                if(task.name == taskToChange.name) {
+                    task.name = newName;
+                }
+            }
+        }
+        Storage.updateData(data);
+        UI.loadSelected();
+    }
+
+    static changeTaskDescription(taskToChange, newDescription) {
+        const data = Storage.getData();
+        for(const project of data.projects) {
+            for(const task of project.tasks) {
+                if(task.name == taskToChange.name) {
+                    task.description= newDescription;
+                }
+            }
+        }
+        Storage.updateData(data);
     }
 }

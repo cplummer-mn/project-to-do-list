@@ -35,15 +35,30 @@ export default class Project {
     display() {
         console.log(this.name + " is being displayed");
         
+        const addTaskButton = document.getElementById('add-task-button');
+
+        if(this.name == 'Today Project' || this.name == 'This Week Project') {
+            addTaskButton.hidden = true;
+        }
+        else {
+            addTaskButton.hidden = false;
+        }
+
         const taskItemArray = document.querySelectorAll('.task-item');
         console.log(taskItemArray);
         for(const taskItem of taskItemArray) {
             console.log(taskItem);
             main.removeChild(taskItem);
         }
-
-        for(const task of this.tasks) {
-            task.displayTask();
+        const data = Storage.getData();
+        for(const project of data.projects) {
+            if(project.name == this.name) {
+                console.log(project.name + " is being displayed");
+                console.log(project);
+                for(const task of project.tasks) {
+                    task.displayTask();
+                }
+            }
         }
     }
 }
